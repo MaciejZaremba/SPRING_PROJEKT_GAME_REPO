@@ -1,0 +1,6 @@
+rootProject.name = 'GameRepo'
+
+include 'Games_Client'
+include 'Games_API'
+include 'Games_Data'
+include 'Games_Updater'

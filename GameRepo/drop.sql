@@ -1,0 +1,17 @@
+alter table game_companies drop foreign key FK6mp20inlbc6jc8axef8tupq41;
+alter table game_companies drop foreign key FKt7lcvjbmshvtc1n4uynyal4lj;
+alter table game_genres drop foreign key FKw91cn6ww8yw72nr59y28i8me;
+alter table game_genres drop foreign key FKdtsx09yopd98e0luewrusjd9e;
+alter table game_platforms drop foreign key FKeqvfcfahkc1l3qnvpo78wjhsr;
+alter table game_platforms drop foreign key FK3kemckavrli2dk4fw6qxu5a2w;
+alter table game_themes drop foreign key FKivce915we1ihempqv946jng1v;
+alter table game_themes drop foreign key FKrv351jxlioy0a17y5bbjj6fw4;
+drop table if exists company;
+drop table if exists game;
+drop table if exists game_companies;
+drop table if exists game_genres;
+drop table if exists game_platforms;
+drop table if exists game_themes;
+drop table if exists genre;
+drop table if exists platform;
+drop table if exists theme;

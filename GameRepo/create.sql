@@ -1,0 +1,17 @@
+create table company (apiid integer, id bigint not null auto_increment, country varchar(255), name varchar(255), primary key (id)) engine=InnoDB;
+create table game (apiid integer, rating float(53), release_year integer, id bigint not null auto_increment, name varchar(255), primary key (id)) engine=InnoDB;
+create table game_companies (companies_id bigint not null, game_id bigint not null) engine=InnoDB;
+create table game_genres (game_id bigint not null, genres_id bigint not null) engine=InnoDB;
+create table game_platforms (game_id bigint not null, platforms_id bigint not null) engine=InnoDB;
+create table game_themes (game_id bigint not null, themes_id bigint not null) engine=InnoDB;
+create table genre (apiid integer, id bigint not null auto_increment, name varchar(255), primary key (id)) engine=InnoDB;
+create table platform (apiid integer, id bigint not null auto_increment, name varchar(255), primary key (id)) engine=InnoDB;
+create table theme (apiid integer, id bigint not null auto_increment, name varchar(255), primary key (id)) engine=InnoDB;
+alter table game_companies add constraint FK6mp20inlbc6jc8axef8tupq41 foreign key (companies_id) references company (id);
+alter table game_companies add constraint FKt7lcvjbmshvtc1n4uynyal4lj foreign key (game_id) references game (id);
+alter table game_genres add constraint FKw91cn6ww8yw72nr59y28i8me foreign key (genres_id) references genre (id);
+alter table game_genres add constraint FKdtsx09yopd98e0luewrusjd9e foreign key (game_id) references game (id);
+alter table game_platforms add constraint FKeqvfcfahkc1l3qnvpo78wjhsr foreign key (platforms_id) references platform (id);
+alter table game_platforms add constraint FK3kemckavrli2dk4fw6qxu5a2w foreign key (game_id) references game (id);
+alter table game_themes add constraint FKivce915we1ihempqv946jng1v foreign key (themes_id) references theme (id);
+alter table game_themes add constraint FKrv351jxlioy0a17y5bbjj6fw4 foreign key (game_id) references game (id);
