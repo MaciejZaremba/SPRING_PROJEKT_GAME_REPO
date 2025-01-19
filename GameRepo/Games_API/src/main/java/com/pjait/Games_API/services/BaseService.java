@@ -11,7 +11,7 @@ public abstract class BaseService<T> {
         this.repository = repository;
     }
 
-    protected List<T> findAll() {
+    protected List<T> findAllEntities() {
         List<T> list = repository.findAll();
         return list;
     }

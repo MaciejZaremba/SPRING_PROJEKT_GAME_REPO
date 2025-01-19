@@ -19,7 +19,7 @@ public class ThemeService extends BaseService<Theme> {
     }
 
     public List<Theme> findAllThemes() {
-        return findAll();
+        return findAllEntities();
     }
 
     public Theme findThemeById(Long id) {

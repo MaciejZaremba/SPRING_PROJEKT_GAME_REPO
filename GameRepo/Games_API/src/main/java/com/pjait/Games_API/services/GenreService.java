@@ -19,7 +19,7 @@ public class GenreService extends BaseService<Genre> {
     }
 
     public List<Genre> findAllGenres() {
-        return findAll();
+        return findAllEntities();
     }
 
     public Genre findGenreById(Long id) {

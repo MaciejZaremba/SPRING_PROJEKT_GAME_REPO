@@ -19,7 +19,7 @@ public class GameService extends BaseService<Game>{
     }
 
     public List<Game> findAllGames() {
-        return findAll();
+        return findAllEntities();
     }
 
     public Game findGameById(Long id) {

@@ -2,7 +2,6 @@ package com.pjait.Games_API.services;
 
 import com.pjait.Games_Data.entities.Platform;
 import com.pjait.Games_Data.repositories.PlatformRepository;
-import com.pjait.Games_Data.repositories.ThemeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +19,7 @@ public class PlatformService extends BaseService<Platform> {
     }
 
     public List<Platform> findAllPlatforms() {
-        return findAll();
+        return findAllEntities();
     }
 
     public Platform findPlatformById(Long id) {

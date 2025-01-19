@@ -16,11 +16,11 @@ public class Genre {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(unique=true)
-    private Long apiID;
+    private Long apiId;
     private String name;
 
-    public Genre(Long apiID, String name) {
-        this.apiID = apiID;
+    public Genre(Long apiId, String name) {
+        this.apiId = apiId;
         this.name = name;
     }
 

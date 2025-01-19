@@ -10,10 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.apache.hc.client5.http.fluent.Request;
 
-import java.time.Instant;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import static org.apache.hc.core5.http.ContentType.TEXT_PLAIN;
@@ -115,7 +112,7 @@ public class DatabaseService {
 
         for (JsonNode genreNode : jsonResponse) {
             Genre genre = new Genre();
-            genre.setApiID(genreNode.get("id").asLong());
+            genre.setApiId(genreNode.get("id").asLong());
             genre.setName(genreNode.get("name").asText());
             genres.add(genre);
         }
@@ -182,7 +179,7 @@ public class DatabaseService {
 
             for (JsonNode companyNode : jsonResponse) {
                 Company company = new Company();
-                company.setApiID(companyNode.get("id").asLong());
+                company.setApiId(companyNode.get("id").asLong());
                 company.setName(companyNode.get("name").asText());
                 companies.add(company);
             }
@@ -220,7 +217,7 @@ public class DatabaseService {
 
             for (JsonNode platformNode : jsonResponse) {
                 Platform platform = new Platform();
-                platform.setApiID(platformNode.get("id").asLong());
+                platform.setApiId(platformNode.get("id").asLong());
                 platform.setName(platformNode.get("name").asText());
                 platforms.add(platform);
             }

@@ -19,7 +19,7 @@ public class CompanyService extends BaseService<Company> {
     }
 
     public List<Company> findAllCompanies() {
-        return findAll();
+        return findAllEntities();
     }
 
     public Company findCompanyById(Long id) {

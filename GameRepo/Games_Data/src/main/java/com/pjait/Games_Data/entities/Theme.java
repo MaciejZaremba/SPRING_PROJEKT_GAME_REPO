@@ -16,12 +16,12 @@ public class Theme {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(unique=true)
-    private Long apiID;
+    private Long apiId;
     private String name;
 
-    public Theme(Long id, Long apiID, String name) {
+    public Theme(Long id, Long apiId, String name) {
         this.id = id;
-        this.apiID = apiID;
+        this.apiId = apiId;
         this.name = name;
     }
 }
