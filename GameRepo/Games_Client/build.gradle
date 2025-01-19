@@ -18,9 +18,24 @@ repositories {
 }
 
 dependencies {
+	implementation project(':Games_Data')
+
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	//JPA
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+	//Lombok
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	//MariaDB
+	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+
+	//Http
+	implementation group: 'org.apache.httpcomponents.client5', name: 'httpclient5-fluent', version: '5.4.1'
 }
 
 tasks.named('test') {

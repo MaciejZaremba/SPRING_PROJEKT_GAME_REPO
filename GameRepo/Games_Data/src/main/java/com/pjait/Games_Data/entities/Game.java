@@ -17,7 +17,8 @@ public class Game {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Integer apiID;
+    @Column(unique=true)
+    private Long apiID;
     private String name;
     @ManyToMany
     private List<Genre> genres;
@@ -30,7 +31,7 @@ public class Game {
     @ManyToMany
     private List<Company> companies;
 
-    public Game(Integer apiID, String name, List<Genre> genres, List<Theme> themes, Integer releaseYear, Double rating, List<Platform> platforms, List<Company> companies) {
+    public Game(Long apiID, String name, List<Genre> genres, List<Theme> themes, Integer releaseYear, Double rating, List<Platform> platforms, List<Company> companies) {
         this.apiID = apiID;
         this.name = name;
         this.genres = genres;

@@ -4,7 +4,7 @@ import java.util.List;
 
 public record GameDTO(
         Long id,
-        Integer apiId,
+        Long apiId,
         String name,
         Integer releaseYear,
         Double rating,

@@ -18,15 +18,19 @@ repositories {
 }
 
 dependencies {
+	implementation project(':Games_Data')
 
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
-	testImplementation group: 'io.rest-assured', name: 'rest-assured', version: '5.5.0'
+	//Lombok
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
+
+	//Rest
+	testImplementation group: 'io.rest-assured', name: 'rest-assured', version: '5.5.0'
+
 }
 
 tasks.named('test') {

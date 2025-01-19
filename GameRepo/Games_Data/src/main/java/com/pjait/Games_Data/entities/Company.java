@@ -15,10 +15,13 @@ public class Company {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private Integer apiID;
+    @Column(unique=true)
+    private Long apiID;
     private String name;
-    @Column(nullable = true)
-    private String country;
 
+    public Company(Long id, Long apiID, String name) {
+        this.id = id;
+        this.apiID = apiID;
+        this.name = name;
+    }
 }

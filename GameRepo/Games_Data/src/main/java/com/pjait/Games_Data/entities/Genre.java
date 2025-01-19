@@ -1,9 +1,6 @@
 package com.pjait.Games_Data.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,11 +15,11 @@ public class Genre {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private Integer apiID;
+    @Column(unique=true)
+    private Long apiID;
     private String name;
 
-    public Genre(Integer apiID, String name) {
+    public Genre(Long apiID, String name) {
         this.apiID = apiID;
         this.name = name;
     }

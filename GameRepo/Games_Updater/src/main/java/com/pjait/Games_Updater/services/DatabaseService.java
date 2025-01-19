@@ -13,7 +13,10 @@ import org.apache.hc.client5.http.fluent.Request;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import static org.apache.hc.core5.http.ContentType.TEXT_PLAIN;
 
 @Service
 public class DatabaseService {
@@ -22,9 +25,9 @@ public class DatabaseService {
     private final ThemeRepository themeRepository;
     private final CompanyRepository companyRepository;
     private final PlatformRepository platformRepository;
-    private final RestTemplate restTemplate;
     private final String clientID = "tm7bjkd9zl6nifcxx3e2a53ohhemhr";
     private final String accessKey = "Bearer i3xwqrk258uxd8y3m6fzs2ourga9om";
+
 
     @Autowired
     public DatabaseService(GameRepository gameRepository, GenreRepository genreRepository, ThemeRepository themeRepository, CompanyRepository companyRepository, PlatformRepository platformRepository, RestTemplate restTemplate) {
@@ -33,7 +36,6 @@ public class DatabaseService {
         this.themeRepository = themeRepository;
         this.companyRepository = companyRepository;
         this.platformRepository = platformRepository;
-        this.restTemplate = restTemplate;
     }
 
     @SneakyThrows
@@ -46,14 +48,14 @@ public class DatabaseService {
 
         while(true){
             String requestBody = String.format(
-                    "fields id, name, genres, themes, involved_companies, platforms, rating, first_release_date;\nlimit %d;\noffset %d",
+                    "fields id, name, rating, first_release_date;\nlimit %d;\noffset %d;",
                     limit, offset
             );
 
             String response = Request.post(apiURL)
                     .addHeader("Client-ID", clientID)
                     .addHeader("Authorization", accessKey)
-                    .bodyString(requestBody, null)
+                    .bodyString(requestBody, TEXT_PLAIN)
                     .execute()
                     .returnContent()
                     .asString();
@@ -64,22 +66,33 @@ public class DatabaseService {
 
             for (JsonNode gameNode : jsonResponse) {
                 Game game = new Game();
-                game.setApiID( gameNode.get("id").asInt());
-                game.setName( gameNode.get("name").asText());
-                game.setRating(gameNode.get("rating").asDouble());
-                game.setReleaseYear(gameNode.has("release_dates") && gameNode.get("release_dates").has(0)
-                        ? Instant.ofEpochSecond(gameNode.get("release_dates").get(0).get("date").asLong())
-                        .atZone(ZoneId.systemDefault())
-                        .getYear()
-                        : null);
+                game.setApiID(gameNode.get("id").asLong());
+                game.setName(gameNode.get("name").asText());
 
+                if(gameNode.has("rating")) {
+                    game.setRating(gameNode.get("rating").asDouble());
+                } else {
+                    game.setRating(null);
+                }
+                if(gameNode.has("first_release_date")) {
+                    Long epoch = gameNode.get("first_release_date").asLong();
+                    String date = new java.text.SimpleDateFormat("yyyy").format(new java.util.Date(epoch * 1000));
 
+                    game.setReleaseYear(Integer.valueOf(date));
+                } else {
+                    game.setReleaseYear(null);
+                }
+                games.add(game);
             }
+
+            gameRepository.saveAll(games);
+            games.clear();
+            offset += limit;
         }
     }
 
     @SneakyThrows
-    private void fetchAndSaveGenres(){
+    public void fetchAndSaveGenres(){
         int limit = 50;
         String apiURL = "https://api.igdb.com/v4/genres";
         List<Genre> genres = new ArrayList<>();
@@ -93,7 +106,7 @@ public class DatabaseService {
         String response = Request.post(apiURL)
                 .addHeader("Client-ID", clientID)
                 .addHeader("Authorization", accessKey)
-                .bodyString(requestBody, null)
+                .bodyString(requestBody, TEXT_PLAIN)
                 .execute()
                 .returnContent()
                 .asString();
@@ -102,14 +115,15 @@ public class DatabaseService {
 
         for (JsonNode genreNode : jsonResponse) {
             Genre genre = new Genre();
-            genre.setApiID( genreNode.get("id").asInt());
-            genre.setName( genreNode.get("name").asText());
+            genre.setApiID(genreNode.get("id").asLong());
+            genre.setName(genreNode.get("name").asText());
             genres.add(genre);
         }
+        genreRepository.saveAll(genres);
     }
 
     @SneakyThrows
-    private void fetchAndSaveThemes(){
+    public void fetchAndSaveThemes(){
         int limit = 50;
         String apiURL = "https://api.igdb.com/v4/themes";
         List<Theme> themes = new ArrayList<>();
@@ -123,7 +137,7 @@ public class DatabaseService {
         String response = Request.post(apiURL)
                 .addHeader("Client-ID", clientID)
                 .addHeader("Authorization", accessKey)
-                .bodyString(requestBody, null)
+                .bodyString(requestBody, TEXT_PLAIN)
                 .execute()
                 .returnContent()
                 .asString();
@@ -132,14 +146,16 @@ public class DatabaseService {
 
         for (JsonNode themeNode : jsonResponse) {
             Theme theme = new Theme();
-            theme.setApiID( themeNode.get("id").asInt());
-            theme.setName( themeNode.get("name").asText());
+            theme.setApiID(themeNode.get("id").asLong());
+            theme.setName(themeNode.get("name").asText());
             themes.add(theme);
         }
+        themeRepository.saveAll(themes);
+
     }
 
     @SneakyThrows
-    private void fetchAndSaveCompanies() {
+    public void fetchAndSaveCompanies() {
         int limit = 50;
         int offset = 0;
         String apiURL = "https://api.igdb.com/v4/companies";
@@ -148,37 +164,36 @@ public class DatabaseService {
 
         while (true) {
             String requestBody = String.format(
-                    "fields id, name, country;\nlimit %d;\noffset %d",
+                    "fields id, name, country;\nlimit %d;\noffset %d;",
                     limit, offset
             );
 
             String response = Request.post(apiURL)
                     .addHeader("Client-ID", clientID)
                     .addHeader("Authorization", accessKey)
-                    .bodyString(requestBody, null)
+                    .bodyString(requestBody, TEXT_PLAIN)
                     .execute()
                     .returnContent()
                     .asString();
 
             JsonNode jsonResponse = mapper.readTree(response);
 
+            if(jsonResponse.isEmpty()) break;
+
             for (JsonNode companyNode : jsonResponse) {
                 Company company = new Company();
-                company.setApiID(companyNode.get("id").asInt());
+                company.setApiID(companyNode.get("id").asLong());
                 company.setName(companyNode.get("name").asText());
-
-                if (companyNode.has("country") && !companyNode.get("country").isNull() && !companyNode.get("country").asText().isEmpty()) {
-                    company.setCountry(companyNode.get("country").asText());
-                } else {
-                    company.setCountry(null);
-                }
                 companies.add(company);
             }
+            companyRepository.saveAll(companies);
+            companies.clear();
+            offset += limit;
         }
     }
 
     @SneakyThrows
-    private void fetchAndSavePlatforms() {
+    public void fetchAndSavePlatforms() {
         int limit = 50;
         int offset = 0;
         String apiURL = "https://api.igdb.com/v4/platforms";
@@ -187,26 +202,93 @@ public class DatabaseService {
 
         while (true) {
             String requestBody = String.format(
-                    "fields id, name;\nlimit %d;\noffset %d",
+                    "fields id, name;\nlimit %d;\noffset %d;",
                     limit, offset
             );
 
             String response = Request.post(apiURL)
                     .addHeader("Client-ID", clientID)
                     .addHeader("Authorization", accessKey)
-                    .bodyString(requestBody, null)
+                    .bodyString(requestBody, TEXT_PLAIN)
                     .execute()
                     .returnContent()
                     .asString();
 
             JsonNode jsonResponse = mapper.readTree(response);
 
-            for (JsonNode companyNode : jsonResponse) {
+            if(jsonResponse.isEmpty()) break;
+
+            for (JsonNode platformNode : jsonResponse) {
                 Platform platform = new Platform();
-                platform.setApiID(companyNode.get("id").asInt());
-                platform.setName(companyNode.get("name").asText());
+                platform.setApiID(platformNode.get("id").asLong());
+                platform.setName(platformNode.get("name").asText());
                 platforms.add(platform);
             }
+            platformRepository.saveAll(platforms);
+            platforms.clear();
+            offset += limit;
+        }
+    }
+
+    @SneakyThrows
+    public void updateGameRelationships() {
+        String apiURL = "https://api.igdb.com/v4/games";
+        List<Game> games = gameRepository.findAll();
+        ObjectMapper mapper = new ObjectMapper();
+
+        for (Game game : games) {
+            String requestBody = String.format(
+                    "fields genres, themes, platforms, involved_companies;\nwhere id = %d;",
+                    game.getApiID()
+            );
+
+            String response = Request.post(apiURL)
+                    .addHeader("Client-ID", clientID)
+                    .addHeader("Authorization", accessKey)
+                    .bodyString(requestBody, TEXT_PLAIN)
+                    .execute()
+                    .returnContent()
+                    .asString();
+
+            JsonNode jsonResponse = mapper.readTree(response);
+
+            if (jsonResponse.isEmpty()) continue;
+
+            JsonNode gameNode = jsonResponse.get(0);
+
+            if (gameNode.has("genres")) {
+                List<Genre> genres = new ArrayList<>();
+                for (JsonNode genreId : gameNode.get("genres")) {
+                    genreRepository.findById(genreId.asLong()).ifPresent(genres::add);
+                }
+                game.setGenres(genres);
+            }
+
+            if (gameNode.has("themes")) {
+                List<Theme> themes = new ArrayList<>();
+                for (JsonNode themeId : gameNode.get("themes")) {
+                    themeRepository.findById(themeId.asLong()).ifPresent(themes::add);
+                }
+                game.setThemes(themes);
+            }
+
+            if (gameNode.has("platforms")) {
+                List<Platform> platforms = new ArrayList<>();
+                for (JsonNode platformId : gameNode.get("platforms")) {
+                    platformRepository.findById(platformId.asLong()).ifPresent(platforms::add);
+                }
+                game.setPlatforms(platforms);
+            }
+
+            if (gameNode.has("involved_companies")) {
+                List<Company> companies = new ArrayList<>();
+                for (JsonNode companyId : gameNode.get("involved_companies")) {
+                    companyRepository.findById(companyId.asLong()).ifPresent(companies::add);
+                }
+                game.setCompanies(companies);
+            }
+
+            gameRepository.save(game);
         }
     }
 }
