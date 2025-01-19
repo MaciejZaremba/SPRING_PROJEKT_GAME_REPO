@@ -9,5 +9,5 @@ import java.util.Optional;
 @Repository
 public interface ThemeRepository extends JpaRepository<Theme, Long> {
     Optional<Theme> findByName(String name);
-    Optional<Theme> findById(Long id);
+    Optional<Theme> findByApiId(Long apiId);
 }

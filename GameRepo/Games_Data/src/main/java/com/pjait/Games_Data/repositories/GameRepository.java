@@ -11,8 +11,7 @@ import java.util.List;
 @Repository
 public interface GameRepository extends JpaRepository<Game, Long> {
     Optional<Game> findByName(String name);
-    Optional<Game> findById(Long id);
-    List<Game> findAll();
+    Optional<Game> findByApiId(Long apiId);
     List<Game> findAllByRating(Double rating);
     List<Game> findAllByReleaseYear(Integer releaseYear);
     List<Game> findAllByGenres(List<Genre> genres);
