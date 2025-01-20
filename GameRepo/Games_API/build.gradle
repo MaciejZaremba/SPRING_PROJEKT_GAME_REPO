@@ -37,9 +37,6 @@ dependencies {
 	//MariaDB
 	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 
-	//Selenium
-	implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '4.27.0'
-
 }
 
 tasks.named('test') {

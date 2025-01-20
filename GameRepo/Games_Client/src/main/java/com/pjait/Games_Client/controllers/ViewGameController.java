@@ -26,7 +26,7 @@ public class ViewGameController {
     public String viewAllGames(Model model) {
         List<Game> games = viewGameService.getAllGames();
 
-        model.addAttribute("entityType", "games");
+        model.addAttribute("entityType", "Game");
         model.addAttribute("entities", games);
         return "viewList";
     }

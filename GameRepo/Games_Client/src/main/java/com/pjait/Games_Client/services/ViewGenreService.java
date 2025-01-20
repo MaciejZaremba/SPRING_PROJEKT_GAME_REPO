@@ -18,7 +18,7 @@ public class ViewGenreService extends ViewBaseService{
     }
 
     public Genre getGenreById(Long id) {
-        return (Genre) viewEntityByField("/genres/apiId/" + id, new ParameterizedTypeReference<>() {});
+        return (Genre) viewEntityByField("/genres/id/" + id, new ParameterizedTypeReference<>() {});
     }
 
     public Genre getGenreByName(String name) {

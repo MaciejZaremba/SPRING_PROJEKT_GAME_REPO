@@ -260,7 +260,10 @@ public class DatabaseService {
             if (gameNode.has("genres")) {
                 List<Genre> genres = new ArrayList<>();
                 for (JsonNode genreApiId : gameNode.get("genres")) {
-                    genreRepository.findByApiId(genreApiId.asLong()).ifPresent(genres::add);
+                    Genre genre = genreRepository.findByApiId(genreApiId.asLong());
+                    if (genre != null) {
+                        genres.add(genre);
+                    }
                 }
                 game.setGenres(genres);
             }
@@ -268,7 +271,10 @@ public class DatabaseService {
             if (gameNode.has("themes")) {
                 List<Theme> themes = new ArrayList<>();
                 for (JsonNode themeApiId : gameNode.get("themes")) {
-                    themeRepository.findByApiId(themeApiId.asLong()).ifPresent(themes::add);
+                    Theme theme = themeRepository.findByApiId(themeApiId.asLong());
+                    if (theme != null) {
+                        themes.add(theme);
+                    }
                 }
                 game.setThemes(themes);
             }
@@ -276,7 +282,10 @@ public class DatabaseService {
             if (gameNode.has("platforms")) {
                 List<Platform> platforms = new ArrayList<>();
                 for (JsonNode platformApiId : gameNode.get("platforms")) {
-                    platformRepository.findByApiId(platformApiId.asLong()).ifPresent(platforms::add);
+                    Platform platform = platformRepository.findByApiId(platformApiId.asLong());
+                    if (platform != null) {
+                        platforms.add(platform);
+                    }
                 }
                 game.setPlatforms(platforms);
             }
@@ -284,7 +293,10 @@ public class DatabaseService {
             if (gameNode.has("involved_companies")) {
                 List<Company> companies = new ArrayList<>();
                 for (JsonNode companyApiId : gameNode.get("involved_companies")) {
-                    companyRepository.findByApiId(companyApiId.asLong()).ifPresent(companies::add);
+                    Company company = companyRepository.findByApiId(companyApiId.asLong());
+                    if (company != null) {
+                        companies.add(company);
+                    }
                 }
                 game.setCompanies(companies);
             }
