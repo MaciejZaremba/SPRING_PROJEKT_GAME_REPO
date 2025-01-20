@@ -1,7 +1,9 @@
 package com.pjait.Games_API.services;
 
+import com.pjait.Games_Data.exceptions.EntityNotFound;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 public abstract class BaseService<T> {
@@ -31,9 +33,21 @@ public abstract class BaseService<T> {
     }
 
     protected void update(T entity, Long id) {
+        T oldEntity = null;
         if(repository.findById(id).isPresent()) {
-            repository.save(entity);
+            oldEntity = repository.findById(id).get();
+        } else {
+            throw new EntityNotFound();
         }
+        try {
+            Field idField = entity.getClass().getDeclaredField("id");
+            idField.setAccessible(true);
+            idField.set(entity, id);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+
+        repository.save(entity);
     }
 
 }

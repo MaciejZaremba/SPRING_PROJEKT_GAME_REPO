@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/api/companies")
@@ -40,18 +39,18 @@ public class CompanyController {
     }
 
     @GetMapping("/name/{name}")
-    public ResponseEntity<Optional<Company>> getCompanyByName(@PathVariable String name) {
-        Optional<Company> company = companyService.findCompanyByName(name);
-        if (company.isEmpty()) {
+    public ResponseEntity<Company> getCompanyByName(@PathVariable String name) {
+        Company company = companyService.findCompanyByName(name);
+        if (company == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(company, HttpStatus.OK);
     }
 
     @GetMapping("/apiId/{apiId}")
-    public ResponseEntity<Optional<Company>> getCompanyByApiId(@PathVariable Long apiId) {
-        Optional<Company> company = companyService.findCompanyByApiId(apiId);
-        if (company.isEmpty()) {
+    public ResponseEntity<Company> getCompanyByApiId(@PathVariable Long apiId) {
+        Company company = companyService.findCompanyByApiId(apiId);
+        if (company == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(company, HttpStatus.OK);
@@ -59,11 +58,11 @@ public class CompanyController {
 
     @PostMapping
     public ResponseEntity<Void> createCompany(@RequestBody Company company) {
-        if (companyService.findCompanyByName(company.getName()).isPresent()) {
+        if (companyService.findCompanyByName(company.getName()) != null) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
         companyService.addCompany(company);
-        if (companyService.findCompanyByName(company.getName()).isPresent()) {
+        if (companyService.findCompanyByName(company.getName()) != null) {
             return new ResponseEntity<>(HttpStatus.CREATED);
         }
         return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);

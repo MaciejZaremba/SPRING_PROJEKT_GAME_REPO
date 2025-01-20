@@ -1,12 +1,13 @@
 package com.pjait.Games_API.controllers;
 
-import com.pjait.Games_API.services.GameService;
+import com.pjait.Games_API.services.*;
 import com.pjait.Games_Data.entities.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,10 +15,18 @@ import java.util.Optional;
 @RequestMapping("/api/games")
 public class GameController {
     private final GameService gameService;
+    private final GenreService genreService;
+    private final ThemeService themeService;
+    private final CompanyService companyService;
+    private final PlatformService platformService;
 
     @Autowired
-    public GameController(GameService gameService) {
+    public GameController(GameService gameService, GenreService genreService, ThemeService themeService, CompanyService companyService, PlatformService platformService) {
         this.gameService = gameService;
+        this.genreService = genreService;
+        this.themeService = themeService;
+        this.companyService = companyService;
+        this.platformService = platformService;
     }
 
     @GetMapping
@@ -70,9 +79,15 @@ public class GameController {
 
     }
 
-    @GetMapping("/genres/{genres}")
-    public ResponseEntity<List<Game>> getGamesByGenres(@PathVariable List<Genre> genres) {
-        List<Game> games = gameService.findAllByGenres(genres);
+    @GetMapping("/genres/{genre}")
+    public ResponseEntity<List<Game>> getGamesByGenres(@PathVariable String genre) {
+        Genre foundGenre = genreService.findGenreByName(genre);
+        if (foundGenre == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        List<Genre> genres = new ArrayList<>();
+        genres.add(foundGenre);
+        List<Game> games = gameService.findAllByGenre(genres);
         if (games.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -80,9 +95,15 @@ public class GameController {
 
     }
 
-    @GetMapping("/themes/{themes}")
-    public ResponseEntity<List<Game>> getGamesByThemes(@PathVariable List<Theme> themes) {
-        List<Game> games = gameService.findAllByThemes(themes);
+    @GetMapping("/themes/{theme}")
+    public ResponseEntity<List<Game>> getGamesByThemes(@PathVariable String theme) {
+        Theme foundTheme = themeService.findThemeByName(theme);
+        if (foundTheme == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        List<Theme> themes = new ArrayList<>();
+        themes.add(foundTheme);
+        List<Game> games = gameService.findAllByTheme(themes);
         if (games.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -100,9 +121,15 @@ public class GameController {
 
     }
 
-    @GetMapping("/companies/{companies}")
-    public ResponseEntity<List<Game>> getGamesByCompany(@PathVariable List<Company> companies) {
-        List<Game> game = gameService.findAllByCompanies(companies);
+    @GetMapping("/companies/{company}")
+    public ResponseEntity<List<Game>> getGamesByCompany(@PathVariable String company) {
+        Company foundCompany = companyService.findCompanyByName(company);
+        if (foundCompany == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        List<Company> companies = new ArrayList<>();
+        companies.add(foundCompany);
+        List<Game> game = gameService.findAllByCompany(companies);
         if (game.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -110,9 +137,15 @@ public class GameController {
 
     }
 
-    @GetMapping("/platforms/{platforms}")
-    public ResponseEntity<List<Game>> getGamesByPlatform(@PathVariable List<Platform> platforms) {
-        List<Game> game = gameService.findAllByPlatforms(platforms);
+    @GetMapping("/platforms/{platform}")
+    public ResponseEntity<List<Game>> getGamesByPlatform(@PathVariable String platform) {
+        Platform foundPlatform = platformService.findPlatformByName(platform);
+        if (foundPlatform == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        List<Platform> platforms = new ArrayList<>();
+        platforms.add(foundPlatform);
+        List<Game> game = gameService.findAllByPlatform(platforms);
         if (game.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -134,7 +167,7 @@ public class GameController {
 
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/id/{id}")
     public ResponseEntity<Void> deleteGame(@PathVariable Long id) {
         Game game = gameService.findGameById(id);
         if (game == null) {
@@ -144,7 +177,7 @@ public class GameController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/id/{id}")
     public ResponseEntity<Void> updateGame(@PathVariable Long id, @RequestBody Game game) {
         Game gameTest = gameService.findGameById(id);
         if (gameTest == null) {

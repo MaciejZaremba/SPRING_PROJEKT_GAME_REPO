@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>View</title>
+</head>
+<body>
+<table class="table" id="table">
+    <thead th:unless="${entityType == 'Game'}">
+    <tr>
+        <th>ID</th>
+        <th>API ID</th>
+        <th>Name</th>
+    </tr>
+    </thead>
+
+    <thead th:if="${entityType == 'Game'}">
+    <tr>
+        <th>ID</th>
+        <th>API ID</th>
+        <th>Name</th>
+        <th>Platform</th>
+        <th>Genres</th>
+        <th>Themes</th>
+        <th>Companies</th>
+    </tr>
+    </thead>
+
+    <tbody th:unless="${entityType == 'Game'}">
+    <tr th:each="entity : ${entities}">
+        <td th:text="${entity.id}"></td>
+        <td th:text="${entity.apiId}"></td>
+        <td th:text="${entity.name}"></td>
+    </tr>
+    </tbody>
+
+    <tbody th:if="${entityType == 'Game'}">
+    <tr th:each="entity : ${entities}">
+        <td th:text="${entity.id}"></td>
+        <td th:text="${entity.apiId}"></td>
+        <td th:text="${entity.name}"></td>
+        <td th:text="${entity.platform}"></td>
+        <td th:text="${entity.genres}"></td>
+        <td th:text="${entity.themes}"></td>
+        <td th:text="${entity.companies}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

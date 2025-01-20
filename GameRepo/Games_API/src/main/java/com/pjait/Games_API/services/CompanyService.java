@@ -38,11 +38,11 @@ public class CompanyService extends BaseService<Company> {
         update(company, id);
     }
 
-    public Optional<Company> findCompanyByName(String name) {
+    public Company findCompanyByName(String name) {
         return companyRepository.findByName(name);
     }
 
-    public Optional<Company> findCompanyByApiId(Long apiId)
+    public Company findCompanyByApiId(Long apiId)
     {
         return companyRepository.findByApiId(apiId);
     }

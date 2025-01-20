@@ -40,18 +40,18 @@ public class PlatformController {
     }
 
     @GetMapping("/name/{name}")
-    public ResponseEntity<Optional<Platform>> getPlatformByName(@PathVariable String name) {
-        Optional<Platform> platform = platformService.findPlatformByName(name);
-        if (platform.isEmpty()) {
+    public ResponseEntity<Platform> getPlatformByName(@PathVariable String name) {
+        Platform platform = platformService.findPlatformByName(name);
+        if (platform == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(platform, HttpStatus.OK);
     }
 
     @GetMapping("/apiId/{apiId}")
-    public ResponseEntity<Optional<Platform>> getPlatformByApiId(@PathVariable Long apiId) {
-        Optional<Platform> platform = platformService.findPlatformByApiId(apiId);
-        if (platform.isEmpty()) {
+    public ResponseEntity<Platform> getPlatformByApiId(@PathVariable Long apiId) {
+        Platform platform = platformService.findPlatformByApiId(apiId);
+        if (platform == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(platform, HttpStatus.OK);
@@ -59,11 +59,11 @@ public class PlatformController {
 
     @PostMapping
     public ResponseEntity<Void> createPlatform(@RequestBody Platform platform) {
-        if(platformService.findPlatformByName(platform.getName()).isPresent()) {
+        if(platformService.findPlatformByName(platform.getName()) != null) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
         platformService.addPlatform(platform);
-        if (platformService.findPlatformByName(platform.getName()).isPresent()) {
+        if (platformService.findPlatformByName(platform.getName()) != null) {
             return new ResponseEntity<>(HttpStatus.CREATED);
         }
         return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);

@@ -19,23 +19,11 @@ public class GameService extends BaseService<Game>{
     }
 
     public List<Game> findAllGames() {
-        return gameRepository.findAll();
+        return findAllEntities();
     }
 
     public Game findGameById(Long id) {
-        return gameRepository.findById(id).get();
-    }
-
-    public void deleteGame(Long id) {
-        gameRepository.deleteById(id);
-    }
-
-    public void addGame(Game game) {
-        gameRepository.save(game);
-    }
-
-    public void updateGame(Game game, Long id) {
-        gameRepository.save(game);
+        return findById(id);
     }
 
     public Optional<Game> findGameByName(String name) {
@@ -57,23 +45,35 @@ public class GameService extends BaseService<Game>{
         return gameRepository.findAllByReleaseYear(releaseYear);
     }
 
-    public List<Game> findAllByGenres(List<Genre> genres)
+    public List<Game> findAllByGenre(List<Genre> genres)
     {
         return gameRepository.findAllByGenres(genres);
     }
 
-    public List<Game> findAllByThemes(List<Theme> themes)
+    public List<Game> findAllByTheme(List<Theme> themes)
     {
         return gameRepository.findAllByThemes(themes);
     }
 
-    public List<Game> findAllByCompanies(List<Company> companies)
+    public List<Game> findAllByCompany(List<Company> companies)
     {
         return gameRepository.findAllByCompanies(companies);
     }
 
-    public List<Game> findAllByPlatforms(List<Platform> platforms)
+    public List<Game> findAllByPlatform(List<Platform> platforms)
     {
         return gameRepository.findAllByPlatforms(platforms);
+    }
+
+    public void deleteGame(Long id) {
+        deleteById(id);
+    }
+
+    public void addGame(Game game) {
+        add(game);
+    }
+
+    public void updateGame(Game game, Long id) {
+        update(game, id);
     }
 }

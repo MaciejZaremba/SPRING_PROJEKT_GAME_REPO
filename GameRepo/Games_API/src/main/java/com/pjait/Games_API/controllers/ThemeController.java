@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/api/themes")
@@ -40,18 +39,18 @@ public class ThemeController {
     }
 
     @GetMapping("name/{name}")
-    public ResponseEntity<Optional<Theme>> getThemeByName(@PathVariable String name) {
-        Optional<Theme> theme = themeService.findThemeByName(name);
-        if (theme.isEmpty()) {
+    public ResponseEntity<Theme> getThemeByName(@PathVariable String name) {
+        Theme theme = themeService.findThemeByName(name);
+        if (theme == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(theme, HttpStatus.OK);
     }
 
     @GetMapping("/{apiId}")
-    public ResponseEntity<Optional<Theme>> getThemeByApiId(@PathVariable Long apiId) {
-        Optional<Theme> theme = themeService.findThemeByApiId(apiId);
-        if (theme.isEmpty()) {
+    public ResponseEntity<Theme> getThemeByApiId(@PathVariable Long apiId) {
+        Theme theme = themeService.findThemeByApiId(apiId);
+        if (theme == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(theme, HttpStatus.OK);
@@ -59,11 +58,11 @@ public class ThemeController {
 
     @PostMapping
     public ResponseEntity<Void> createTheme(@RequestBody Theme theme) {
-        if (themeService.findThemeByName(theme.getName()).isPresent()) {
+        if (themeService.findThemeByName(theme.getName()) != null) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
         themeService.addTheme(theme);
-        if (themeService.findThemeByName(theme.getName()).isPresent()) {
+        if (themeService.findThemeByName(theme.getName()) != null) {
             return new ResponseEntity<>(HttpStatus.CREATED);
         }
         return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);

@@ -9,6 +9,6 @@ import java.util.Optional;
 
 @Repository
 public interface PlatformRepository extends JpaRepository<Platform, Long> {
-    Optional<Platform> findByName(String name);
-    Optional<Platform> findByApiId(Long apiId);
+    Platform findByName(String name);
+    Platform findByApiId(Long apiId);
 }

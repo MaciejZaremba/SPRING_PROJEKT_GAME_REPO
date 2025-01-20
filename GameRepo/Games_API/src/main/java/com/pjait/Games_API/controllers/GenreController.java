@@ -40,18 +40,18 @@ public class GenreController {
     }
 
     @GetMapping("name/{name}")
-    public ResponseEntity<Optional<Genre>> getGenreByName(@PathVariable String name) {
-        Optional<Genre> genre = genreService.findGenreByName(name);
-        if (genre.isEmpty()) {
+    public ResponseEntity<Genre> getGenreByName(@PathVariable String name) {
+        Genre genre = genreService.findGenreByName(name);
+        if (genre == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(genre, HttpStatus.OK);
     }
 
     @GetMapping("/apiId/{apiId}")
-    public ResponseEntity<Optional<Genre>> getGenreByApiId(@PathVariable Long apiId) {
-        Optional<Genre> genre = genreService.findGenreByApiId(apiId);
-        if (genre.isEmpty()) {
+    public ResponseEntity<Genre> getGenreByApiId(@PathVariable Long apiId) {
+        Genre genre = genreService.findGenreByApiId(apiId);
+        if (genre == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(genre, HttpStatus.OK);
@@ -59,11 +59,11 @@ public class GenreController {
 
     @PostMapping
     public ResponseEntity<Void> createGenre(@RequestBody Genre genre) {
-        if (genreService.findGenreByName(genre.getName()).isPresent()) {
+        if (genreService.findGenreByName(genre.getName()) != null) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
         genreService.addGenre(genre);
-        if (genreService.findGenreByName(genre.getName()).isPresent()) {
+        if (genreService.findGenreByName(genre.getName()) != null) {
             return new ResponseEntity<>(HttpStatus.CREATED);
         }
         return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);

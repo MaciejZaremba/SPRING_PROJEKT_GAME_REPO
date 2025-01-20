@@ -2,8 +2,6 @@ package com.pjait.Games_Data.repositories;
 
 import com.pjait.Games_Data.entities.*;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -19,6 +17,5 @@ public interface GameRepository extends JpaRepository<Game, Long> {
     List<Game> findAllByThemes(List<Theme> themes);
     List<Game> findAllByCompanies(List<Company> companies);
     List<Game> findAllByPlatforms(List<Platform> platforms);
-
 
 }

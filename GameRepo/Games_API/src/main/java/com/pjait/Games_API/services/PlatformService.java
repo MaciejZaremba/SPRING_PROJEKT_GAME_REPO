@@ -38,11 +38,11 @@ public class PlatformService extends BaseService<Platform> {
         update(platform, id);
     }
 
-    public Optional<Platform> findPlatformByName(String name) {
+    public Platform findPlatformByName(String name) {
         return platformRepository.findByName(name);
     }
 
-    public Optional<Platform> findPlatformByApiId(Long apiId) {
+    public Platform findPlatformByApiId(Long apiId) {
         return platformRepository.findByApiId(apiId);
     }
 }

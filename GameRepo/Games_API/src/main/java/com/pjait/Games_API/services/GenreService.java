@@ -38,11 +38,11 @@ public class GenreService extends BaseService<Genre> {
         update(genre, id);
     }
 
-    public Optional<Genre> findGenreByName(String name) {
+    public Genre findGenreByName(String name) {
         return genreRepository.findByName(name);
     }
 
-    public Optional<Genre> findGenreByApiId(Long apiId)
+    public Genre findGenreByApiId(Long apiId)
     {
         return genreRepository.findByApiId(apiId);
     }

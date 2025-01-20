@@ -38,11 +38,11 @@ public class ThemeService extends BaseService<Theme> {
         update(theme, id);
     }
 
-    public Optional<Theme> findThemeByName(String name) {
+    public Theme findThemeByName(String name) {
         return themeRepository.findByName(name);
     }
 
-    public Optional<Theme> findThemeByApiId(Long apiId) {
+    public Theme findThemeByApiId(Long apiId) {
         return themeRepository.findByApiId(apiId);
     }
 }

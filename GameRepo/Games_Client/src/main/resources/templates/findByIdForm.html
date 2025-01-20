@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Find By ID</title>
+</head>
+<body>
+<form th:if="${entityType == 'Genre'}" action="#" th:action="@{/client/genre/view/id}" th:object="${genre}"
+      method="POST">
+  <label for="genreId">ID:</label>
+  <input type="number" id="genreId" name="genreId" th:field="*{id}"/>
+  <input type="submit" id="genreSubmit" value="Submit">
+</form>
+
+<form th:if="${entityType == 'Game'}" action="#" th:action="@{/client/game/view/id}" th:object="${game}"
+      method="POST">
+  <label for="gameId">ID:</label>
+  <input type="number" id="gameId" name="gameId" th:field="*{id}"/>
+  <input type="submit" id="gameSubmit" value="Submit">
+</form>
+
+</body>
+</html>
