@@ -19,23 +19,23 @@ public class GameService extends BaseService<Game>{
     }
 
     public List<Game> findAllGames() {
-        return findAllEntities();
+        return gameRepository.findAll();
     }
 
     public Game findGameById(Long id) {
-        return findById(id);
+        return gameRepository.findById(id).get();
     }
 
     public void deleteGame(Long id) {
-        deleteById(id);
+        gameRepository.deleteById(id);
     }
 
     public void addGame(Game game) {
-        add(game);
+        gameRepository.save(game);
     }
 
     public void updateGame(Game game, Long id) {
-        update(game, id);
+        gameRepository.save(game);
     }
 
     public Optional<Game> findGameByName(String name) {

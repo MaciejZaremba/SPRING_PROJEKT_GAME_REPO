@@ -11,6 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
+@Table(name="platform")
 public class Platform {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -30,7 +30,7 @@ public class GameController {
 
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/id/{id}")
     public ResponseEntity<Game> getGameById(@PathVariable Long id) {
         Game game = gameService.findGameById(id);
         if (game == null) {

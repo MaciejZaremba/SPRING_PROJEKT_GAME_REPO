@@ -13,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
+@Table(name="game")
 public class Game {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,6 +25,7 @@ public class Game {
     private List<Genre> genres;
     @ManyToMany
     private List<Theme> themes;
+    @Column(name="release_year")
     private Integer releaseYear;
     private Double rating;
     @ManyToMany

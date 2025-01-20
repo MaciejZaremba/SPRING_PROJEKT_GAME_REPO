@@ -34,6 +34,9 @@ dependencies {
 	//Rest
 	testImplementation group: 'io.rest-assured', name: 'rest-assured', version: '5.5.0'
 
+	//MariaDB
+	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+
 }
 
 tasks.named('test') {

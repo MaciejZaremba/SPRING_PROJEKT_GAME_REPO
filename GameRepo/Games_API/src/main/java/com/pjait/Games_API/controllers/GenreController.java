@@ -30,7 +30,7 @@ public class GenreController {
         return new ResponseEntity<>(genres, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/id/{id}")
     public ResponseEntity<Genre> getGenreById(@PathVariable Long id) {
         Genre genre = genreService.findGenreById(id);
         if (genre == null) {

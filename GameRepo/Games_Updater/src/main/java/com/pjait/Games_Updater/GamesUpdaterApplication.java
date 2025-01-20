@@ -29,11 +29,11 @@ public class GamesUpdaterApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		//databaseService.fetchAndSaveGames();
-		//databaseService.fetchAndSaveGenres();
-		//databaseService.fetchAndSaveThemes();
-		//databaseService.fetchAndSaveCompanies();
-		databaseService.fetchAndSavePlatforms();
+//		databaseService.fetchAndSaveGames();
+//		databaseService.fetchAndSaveGenres();
+//		databaseService.fetchAndSaveThemes();
+//		databaseService.fetchAndSaveCompanies();
+//		databaseService.fetchAndSavePlatforms();
 		databaseService.updateGameRelationships();
 	}
 }

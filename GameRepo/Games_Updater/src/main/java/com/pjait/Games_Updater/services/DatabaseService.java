@@ -24,7 +24,7 @@ public class DatabaseService {
     private final PlatformRepository platformRepository;
     private final String clientID = "tm7bjkd9zl6nifcxx3e2a53ohhemhr";
     private final String accessKey = "Bearer i3xwqrk258uxd8y3m6fzs2ourga9om";
-
+    private final int capacity = 500;
 
     @Autowired
     public DatabaseService(GameRepository gameRepository, GenreRepository genreRepository, ThemeRepository themeRepository, CompanyRepository companyRepository, PlatformRepository platformRepository, RestTemplate restTemplate) {
@@ -39,6 +39,7 @@ public class DatabaseService {
     public void fetchAndSaveGames(){
         int limit = 50;
         int offset = 0;
+
         String apiURL = "https://api.igdb.com/v4/games";
         List<Game> games = new ArrayList<>();
         ObjectMapper mapper = new ObjectMapper();
@@ -63,7 +64,7 @@ public class DatabaseService {
 
             for (JsonNode gameNode : jsonResponse) {
                 Game game = new Game();
-                game.setApiID(gameNode.get("id").asLong());
+                game.setApiId(gameNode.get("id").asLong());
                 game.setName(gameNode.get("name").asText());
 
                 if(gameNode.has("rating")) {
@@ -85,6 +86,7 @@ public class DatabaseService {
             gameRepository.saveAll(games);
             games.clear();
             offset += limit;
+            if(offset>capacity) break;
         }
     }
 
@@ -143,7 +145,7 @@ public class DatabaseService {
 
         for (JsonNode themeNode : jsonResponse) {
             Theme theme = new Theme();
-            theme.setApiID(themeNode.get("id").asLong());
+            theme.setApiId(themeNode.get("id").asLong());
             theme.setName(themeNode.get("name").asText());
             themes.add(theme);
         }
@@ -186,6 +188,7 @@ public class DatabaseService {
             companyRepository.saveAll(companies);
             companies.clear();
             offset += limit;
+            if(offset>capacity) break;
         }
     }
 
@@ -224,6 +227,7 @@ public class DatabaseService {
             platformRepository.saveAll(platforms);
             platforms.clear();
             offset += limit;
+            if(offset>capacity) break;
         }
     }
 
@@ -236,7 +240,7 @@ public class DatabaseService {
         for (Game game : games) {
             String requestBody = String.format(
                     "fields genres, themes, platforms, involved_companies;\nwhere id = %d;",
-                    game.getApiID()
+                    game.getApiId()
             );
 
             String response = Request.post(apiURL)
@@ -255,32 +259,32 @@ public class DatabaseService {
 
             if (gameNode.has("genres")) {
                 List<Genre> genres = new ArrayList<>();
-                for (JsonNode genreId : gameNode.get("genres")) {
-                    genreRepository.findById(genreId.asLong()).ifPresent(genres::add);
+                for (JsonNode genreApiId : gameNode.get("genres")) {
+                    genreRepository.findByApiId(genreApiId.asLong()).ifPresent(genres::add);
                 }
                 game.setGenres(genres);
             }
 
             if (gameNode.has("themes")) {
                 List<Theme> themes = new ArrayList<>();
-                for (JsonNode themeId : gameNode.get("themes")) {
-                    themeRepository.findById(themeId.asLong()).ifPresent(themes::add);
+                for (JsonNode themeApiId : gameNode.get("themes")) {
+                    themeRepository.findByApiId(themeApiId.asLong()).ifPresent(themes::add);
                 }
                 game.setThemes(themes);
             }
 
             if (gameNode.has("platforms")) {
                 List<Platform> platforms = new ArrayList<>();
-                for (JsonNode platformId : gameNode.get("platforms")) {
-                    platformRepository.findById(platformId.asLong()).ifPresent(platforms::add);
+                for (JsonNode platformApiId : gameNode.get("platforms")) {
+                    platformRepository.findByApiId(platformApiId.asLong()).ifPresent(platforms::add);
                 }
                 game.setPlatforms(platforms);
             }
 
             if (gameNode.has("involved_companies")) {
                 List<Company> companies = new ArrayList<>();
-                for (JsonNode companyId : gameNode.get("involved_companies")) {
-                    companyRepository.findById(companyId.asLong()).ifPresent(companies::add);
+                for (JsonNode companyApiId : gameNode.get("involved_companies")) {
+                    companyRepository.findByApiId(companyApiId.asLong()).ifPresent(companies::add);
                 }
                 game.setCompanies(companies);
             }
