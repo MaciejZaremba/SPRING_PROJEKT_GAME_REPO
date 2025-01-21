@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Find by Name</title>
+</head>
+<body>
+<form th:if="${entityType == 'Genre'}" action="#" th:action="@{/client/genres/view/name}" th:object="${genre}"
+      method="POST">
+    <label for="genreName">Name:</label>
+    <input type="text" id="genreName" name="genreName" th:field="*{name}"/>
+    <input type="submit" id="genreSubmit" value="Submit">
+</form>
+
+<form th:if="${entityType == 'Game'}" action="#" th:action="@{/client/games/view/name}" th:object="${game}"
+      method="POST">
+    <label for="gameName">Name:</label>
+    <input type="text" id="gameName" name="gameName" th:field="*{name}"/>
+    <input type="submit" id="gameSubmit" value="Submit">
+</form>
+
+<form th:if="${entityType == 'Theme'}" action="#" th:action="@{/client/themes/view/name}" th:object="${theme}"
+      method="POST">
+    <label for="themeName">Name:</label>
+    <input type="text" id="themeName" name="themeName" th:field="*{name}"/>
+    <input type="submit" id="themeSubmit" value="Submit">
+</form>
+
+<form th:if="${entityType == 'Platform'}" action="#" th:action="@{/client/platforms/view/name}" th:object="${platform}"
+      method="POST">
+    <label for="platformName">Name:</label>
+    <input type="text" id="platformName" name="platformName" th:field="*{name}"/>
+    <input type="submit" id="platformSubmit" value="Submit">
+</form>
+
+<form th:if="${entityType == 'Company'}" action="#" th:action="@{/client/companies/view/name}" th:object="${company}"
+      method="POST">
+    <label for="companyName">Name:</label>
+    <input type="text" id="companyName" name="companyName" th:field="*{name}"/>
+    <input type="submit" id="companySubmit" value="Submit">
+</form>
+
+
+</body>
+</html>

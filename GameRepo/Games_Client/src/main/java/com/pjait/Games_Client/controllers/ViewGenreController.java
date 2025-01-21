@@ -27,7 +27,7 @@ public class ViewGenreController {
     @GetMapping("/view/id")
     public String viewGenreById(Model model) {
         model.addAttribute("entityType", "Genre");
-        model.addAttribute("entities", new Genre());
+        model.addAttribute("genre", new Genre());
         return "findByIdForm";
     }
 
@@ -38,5 +38,76 @@ public class ViewGenreController {
         model.addAttribute("entityType", "Genre");
         model.addAttribute("entities", viewGenreService.getGenreById(id));
         return "viewList";
+    }
+
+    @GetMapping("/view/name")
+    public String viewGenreByName(Model model) {
+        model.addAttribute("entityType", "Genre");
+        model.addAttribute("genre", new Genre());
+        return "findByNameForm";
+    }
+
+    @PostMapping("/view/name")
+    public String viewGenreByName(@ModelAttribute Genre genre, Model model) {
+        String name = genre.getName();
+        model.addAttribute("entityType", "Genre");
+        model.addAttribute("entities", viewGenreService.getGenreByName(name));
+        return "viewList";
+    }
+
+    @GetMapping("/view/apiId")
+    public String viewGenreByApiId(Model model) {
+        model.addAttribute("entityType", "Genre");
+        model.addAttribute("genre", new Genre());
+        return "findByApiIdForm";
+    }
+
+    @PostMapping("/view/apiId")
+    public String viewGenreByApiId(@ModelAttribute Genre genre, Model model) {
+        Long apiId = genre.getApiId();
+        model.addAttribute("entityType", "Genre");
+        model.addAttribute("entities", viewGenreService.getGenreByApiId(apiId));
+        return "viewList";
+    }
+
+    @GetMapping("/delete")
+    public String deleteGenre(Model model) {
+        model.addAttribute("entityType", "Genre");
+        model.addAttribute("genre", new Genre());
+        return "deleteForm";
+    }
+
+    @PostMapping("/delete")
+    public String deleteGenre(@ModelAttribute Genre genre) {
+        Long id = genre.getId();
+        this.viewGenreService.deleteGenre(id);
+        return "redirect:/client/genres/view";
+    }
+
+    @GetMapping("/update")
+    public String updateGenre(Model model) {
+        model.addAttribute("entityType", "Genre");
+        model.addAttribute("genre", new Genre());
+        return "updateForm";
+    }
+
+    @PostMapping("/update")
+    public String updateGenre(@ModelAttribute Genre genre) {
+        Long id = genre.getId();
+        this.viewGenreService.updateGenre(id, genre);
+        return "redirect:/client/genres/view";
+    }
+
+    @GetMapping("/add")
+    public String addGenre(Model model) {
+        model.addAttribute("entityType", "Genre");
+        model.addAttribute("genre", new Genre());
+        return "addForm";
+    }
+
+    @PostMapping("/add")
+    public String addGenre(@ModelAttribute Genre genre) {
+        this.viewGenreService.addGenre(genre);
+        return "redirect:/client/genres/view";
     }
 }

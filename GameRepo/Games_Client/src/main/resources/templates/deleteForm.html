@@ -2,44 +2,42 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Find By ID</title>
+    <title>Delete</title>
 </head>
 <body>
-<form th:if="${entityType == 'Genre'}" action="#" th:action="@{/client/genres/view/id}" th:object="${genre}"
+<form th:if="${entityType == 'Genre'}" action="#" th:action="@{/client/genres/delete}" th:object="${genre}"
       method="POST">
-  <label for="genreId">ID:</label>
-  <input type="number" id="genreId" name="genreId" th:field="*{id}"/>
-  <input type="submit" id="genreSubmit" value="Submit">
+    <label for="genreId">ID:</label>
+    <input type="number" id="genreId" name="genreId" th:field="*{id}"/>
+    <input type="submit" id="genreSubmit" value="Submit">
 </form>
 
-<form th:if="${entityType == 'Game'}" action="#" th:action="@{/client/games/view/id}" th:object="${game}"
+<form th:if="${entityType == 'Game'}" action="#" th:action="@{/client/games/delete}" th:object="${game}"
       method="POST">
     <label for="gameId">ID:</label>
     <input type="number" id="gameId" name="gameId" th:field="*{id}"/>
     <input type="submit" id="gameSubmit" value="Submit">
 </form>
 
-<form th:if="${entityType == 'Theme'}" action="#" th:action="@{/client/themes/view/id}" th:object="${theme}"
+<form th:if="${entityType == 'Theme'}" action="#" th:action="@{/client/themes/delete}" th:object="${theme}"
       method="POST">
     <label for="themeId">ID:</label>
     <input type="number" id="themeId" name="themeId" th:field="*{id}"/>
     <input type="submit" id="themeSubmit" value="Submit">
 </form>
 
-<form th:if="${entityType == 'Platform'}" action="#" th:action="@{/client/platforms/view/id}" th:object="${platform}"
+<form th:if="${entityType == 'Platform'}" action="#" th:action="@{/client/platforms/delete}" th:object="${platform}"
       method="POST">
     <label for="platformId">ID:</label>
-    <input type="number" id="platformId" name="platformId" th:field="*{id}"/>
+    <input type="number" id="platformId" name=platformId" th:field="*{id}"/>
     <input type="submit" id="platformSubmit" value="Submit">
 </form>
 
-<form th:if="${entityType == 'Company'}" action="#" th:action="@{/client/companies/view/id}" th:object="${company}"
+<form th:if="${entityType == 'Company'}" action="#" th:action="@{/client/companies/delete}" th:object="${company}"
       method="POST">
     <label for="companyId">ID:</label>
     <input type="number" id="companyId" name="companyId" th:field="*{id}"/>
     <input type="submit" id="companySubmit" value="Submit">
 </form>
-
-
 </body>
 </html>

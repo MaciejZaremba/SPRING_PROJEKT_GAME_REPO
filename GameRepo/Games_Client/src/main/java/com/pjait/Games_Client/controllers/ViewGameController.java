@@ -31,18 +31,96 @@ public class ViewGameController {
         return "viewList";
     }
 
-    @GetMapping("/view/genres")
-    public String viewGenresByGameId(Model model) {
-        model.addAttribute("entityType", "Genre");
-        model.addAttribute("entities", new Genre());
+    @GetMapping("/view/id")
+    public String viewGameById(Model model) {
+        model.addAttribute("entityType", "Game");
+        model.addAttribute("game", new Game());
         return "findByIdForm";
     }
 
-    @PostMapping("/view/genres")
-    public String viewGenresByGameId(@ModelAttribute("entityType") Genre genre, Model model) {
-        Long inputId = genre.getId();
-        model.addAttribute("entityType", "Genre");
-        model.addAttribute("entities", viewGameService.getAllGenresByGameId(inputId));
+    @PostMapping("/view/id")
+    public String viewGameById(@ModelAttribute Game game, Model model)
+    {
+        Long id = game.getId();
+        model.addAttribute("entityType", "Game");
+        model.addAttribute("entities", viewGameService.getGameById(id));
         return "viewList";
     }
+
+    @GetMapping("/view/name")
+    public String viewGameByName(Model model) {
+        model.addAttribute("entityType", "Game");
+        model.addAttribute("game", new Game());
+        return "findByNameForm";
+    }
+
+    @PostMapping("/view/name")
+    public String viewGameByName(@ModelAttribute Game game, Model model)
+    {
+        String name = game.getName();
+        model.addAttribute("entityType", "Game");
+        model.addAttribute("entities", viewGameService.getGameByName(name));
+        return "viewList";
+    }
+
+    @GetMapping("/view/apiId")
+    public String viewGameByApiId(Model model) {
+        model.addAttribute("entityType", "Game");
+        model.addAttribute("game", new Game());
+        return "findByApiIdForm";
+    }
+
+    @PostMapping("/view/apiId")
+    public String viewGameByApiId(@ModelAttribute Game game, Model model)
+    {
+        Long apiId = game.getApiId();
+        model.addAttribute("entityType", "Game");
+        model.addAttribute("entities", viewGameService.getGameByApiId(apiId));
+        return "viewList";
+    }
+
+    @GetMapping("/delete")
+    public String deleteGame(Model model) {
+        model.addAttribute("entityType", "Game");
+        model.addAttribute("game", new Game());
+        return "deleteForm";
+    }
+
+    @PostMapping("/delete")
+    public String deleteGame(@ModelAttribute Game game)
+    {
+        Long id = game.getId();
+        viewGameService.deleteGame(id);
+        return "redirect:/client/games/view";
+    }
+
+    @GetMapping("/update")
+    public String updateGame(Model model) {
+        model.addAttribute("entityType", "Game");
+        model.addAttribute("game", new Game());
+        return "updateForm";
+    }
+
+    @PostMapping("/update")
+    public String updateGame(@ModelAttribute Game game)
+    {
+        Long id = game.getId();
+        viewGameService.updateGame(id, game);
+        return "redirect:/client/games/view";
+    }
+
+    @GetMapping("/add")
+    public String addGame(Model model) {
+        model.addAttribute("entityType", "Game");
+        model.addAttribute("game", new Game());
+        return "updateForm";
+    }
+
+    @PostMapping("/add")
+    public String addGame(@ModelAttribute Game game)
+    {
+        viewGameService.addGame(game);
+        return "redirect:/client/games/view";
+    }
+
 }

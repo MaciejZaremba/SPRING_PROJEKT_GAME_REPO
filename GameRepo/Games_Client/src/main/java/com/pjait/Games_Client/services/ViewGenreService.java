@@ -18,15 +18,15 @@ public class ViewGenreService extends ViewBaseService{
     }
 
     public Genre getGenreById(Long id) {
-        return (Genre) viewEntityByField("/genres/id/" + id, new ParameterizedTypeReference<>() {});
+        return (Genre) viewEntityByField("/genres/id/" + id, new ParameterizedTypeReference<Genre>() {});
     }
 
     public Genre getGenreByName(String name) {
-        return (Genre) viewEntityByField("/genres/name/" + name, new ParameterizedTypeReference<>() {});
+        return (Genre) viewEntityByField("/genres/name/" + name, new ParameterizedTypeReference<Genre>() {});
     }
 
     public Genre getGenreByApiId(Long id) {
-        return (Genre) viewEntityByField("/genres/apiId/" + id, new ParameterizedTypeReference<>() {});
+        return (Genre) viewEntityByField("/genres/apiId/" + id, new ParameterizedTypeReference<Genre>() {});
     }
 
     public void addGenre(Genre genre) {

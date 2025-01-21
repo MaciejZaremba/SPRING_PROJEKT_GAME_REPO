@@ -33,7 +33,7 @@ public class ViewPlatformService extends ViewBaseService{
         createEntity("/platforms", platform);
     }
 
-    public void update(Long id, Platform platform) {
+    public void updatePlatform(Long id, Platform platform) {
         updateEntity("/platforms/id/" + id, platform);
     }
 
