@@ -21,15 +21,23 @@ public class ViewGameService extends ViewBaseService {
     }
 
     public Game getGameById(Long id) {
-        return (Game) viewEntityByField("/games/id/" + id, new ParameterizedTypeReference<>() {});
+        return (Game) viewEntityByField("/games/id/" + id, new ParameterizedTypeReference<Game>() {});
     }
 
     public Game getGameByName(String name) {
-        return (Game) viewEntityByField("/games/name/" + name, new ParameterizedTypeReference<>() {});
+        return (Game) viewEntityByField("/games/name/" + name, new ParameterizedTypeReference<Game>() {});
     }
 
     public Game getGameByApiId(Long id) {
-        return (Game) viewEntityByField("/games/apiId/" + id, new ParameterizedTypeReference<>() {});
+        return (Game) viewEntityByField("/games/apiId/" + id, new ParameterizedTypeReference<Game>() {});
+    }
+
+    public List<Game> getGamesByRating(Double rating) {
+        return viewEntitiesByField("/games/rating/" + rating, new ParameterizedTypeReference<Game>() {});
+    }
+
+    public List<Game> getGamesByReleaseYear(Integer releaseYear) {
+        return viewEntitiesByField("/games/year/" + releaseYear, new ParameterizedTypeReference<>() {});
     }
 
     public void deleteGame(Long id) {
@@ -45,18 +53,18 @@ public class ViewGameService extends ViewBaseService {
     }
 
     public List<Genre> getAllGenresByGameId(Long id) {
-        return viewAllEntitiesOfRelationById("/games/genres/" + id, new ParameterizedTypeReference<>() {});
+        return viewAllEntitiesOfRelationById("/games/genres/" + id, new ParameterizedTypeReference<Genre>() {});
     }
 
     public List<Platform> getAllPlatformsByGameId(Long id) {
-        return viewAllEntitiesOfRelationById("/games/platform/" + id, new ParameterizedTypeReference<>() {});
+        return viewAllEntitiesOfRelationById("/games/platform/" + id, new ParameterizedTypeReference<Platform>() {});
     }
 
     public List<Theme> getAllThemesByGameId(Long id) {
-        return viewAllEntitiesOfRelationById("/games/themes/" + id, new ParameterizedTypeReference<>() {});
+        return viewAllEntitiesOfRelationById("/games/themes/" + id, new ParameterizedTypeReference<Theme>() {});
     }
 
     public List<Company> getAllCompaniesByGameId(Long id) {
-        return viewAllEntitiesOfRelationById("/games/company/" + id, new ParameterizedTypeReference<>() {});
+        return viewAllEntitiesOfRelationById("/games/company/" + id, new ParameterizedTypeReference<Company>() {});
     }
 }

@@ -29,7 +29,7 @@ public class ThemeController {
         return new ResponseEntity<>(themes, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/id/{id}")
     public ResponseEntity<Theme> getTheme(@PathVariable Long id) {
         Theme theme = themeService.findThemeById(id);
         if (theme == null) {
@@ -38,7 +38,7 @@ public class ThemeController {
         return new ResponseEntity<>(theme, HttpStatus.OK);
     }
 
-    @GetMapping("name/{name}")
+    @GetMapping("/name/{name}")
     public ResponseEntity<Theme> getThemeByName(@PathVariable String name) {
         Theme theme = themeService.findThemeByName(name);
         if (theme == null) {
@@ -68,7 +68,7 @@ public class ThemeController {
         return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/id/{id}")
     public ResponseEntity<Void> deleteTheme(@PathVariable Long id) {
         Theme theme = themeService.findThemeById(id);
         if (theme == null) {
@@ -78,7 +78,7 @@ public class ThemeController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/id/{id}")
     public ResponseEntity<Theme> updateTheme(@PathVariable Long id, @RequestBody Theme theme) {
         Theme themeTest = themeService.findThemeById(id);
         if (themeTest == null) {

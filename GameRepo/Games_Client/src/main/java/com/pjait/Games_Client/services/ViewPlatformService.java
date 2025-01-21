@@ -18,15 +18,15 @@ public class ViewPlatformService extends ViewBaseService{
     }
 
     public Platform getPlatformById(Long id) {
-        return (Platform) viewEntityByField("/platforms/apiId/" + id, new ParameterizedTypeReference<>() {});
+        return (Platform) viewEntityByField("/platforms/id/" + id, new ParameterizedTypeReference<Platform>() {});
     }
 
     public Platform getPlatformByName(String name) {
-        return (Platform) viewEntityByField("/platforms/name/" + name, new ParameterizedTypeReference<>() {});
+        return (Platform) viewEntityByField("/platforms/name/" + name, new ParameterizedTypeReference<Platform>() {});
     }
 
     public Platform getPlatformByApiId(Long id) {
-        return (Platform) viewEntityByField("/platforms/apiId/" + id, new ParameterizedTypeReference<>() {});
+        return (Platform) viewEntityByField("/platforms/apiId/" + id, new ParameterizedTypeReference<Platform>() {});
     }
 
     public void addPlatform(Platform platform) {

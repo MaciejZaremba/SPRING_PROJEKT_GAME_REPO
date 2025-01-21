@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:if="${entityType == 'Game'}" action="#" th:action="@{/client/games/view/rating}" th:object="${game}"
+      method="POST">
+    <label for="gameRating">Rating:</label>
+    <input type="number" step="any" min="0" max="100" id="gameRating" name="gameRating" th:field="*{rating}"/>
+    <input type="submit" id="gameSubmit" value="Submit">
+</form>
+</body>
+</html>

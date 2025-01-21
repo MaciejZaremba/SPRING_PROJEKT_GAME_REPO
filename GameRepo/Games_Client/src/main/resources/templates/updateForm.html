@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update</title>
+</head>
+<body>
+<form th:if="${entityType == 'Genre'}" action="#" th:action="@{/client/genres/update}" th:object="${genre}"
+      method="POST">
+    <label for="genreId">ID:</label>
+    <input type="number" id="genreId" name="genreId" th:field="*{id}"/>
+
+    <label for="genreApiId">API ID:</label>
+    <input type="number" id="genreApiId" name="genreApiId" th:field="*{apiId}"/>
+
+    <label for="genreName">Name:</label>
+    <input type="text" id="genreName" name="genreName" th:field="*{name}"/>
+
+    <input type="submit" id="genreSubmit" value="Submit">
+</form>
+
+<form th:if="${entityType == 'Game'}" action="#" th:action="@{/client/games/update}" th:object="${game}"
+      method="POST">
+    <label for="gameId">ID:</label>
+    <input type="number" id="gameId" name="gameId" th:field="*{id}"/>
+
+    <label for="gameApiId">API ID:</label>
+    <input type="number" id="gameApiId" name="gameApiId" th:field="*{apiId}"/>
+
+    <label for="gameName">Name:</label>
+    <input type="text" id="gameName" name="gameName" th:field="*{name}"/>
+
+    <input type="submit" id="gameSubmit" value="Submit">
+</form>
+
+<form th:if="${entityType == 'Theme'}" action="#" th:action="@{/client/themes/update}" th:object="${theme}"
+      method="POST">
+    <label for="themeId">ID:</label>
+    <input type="number" id="themeId" name="themeId" th:field="*{id}"/>
+
+    <label for="themeApiId">API ID:</label>
+    <input type="number" id="themeApiId" name="themeApiId" th:field="*{apiId}"/>
+
+    <label for="themeName">Name:</label>
+    <input type="text" id="themeName" name="themeName" th:field="*{name}"/>
+
+    <input type="submit" id="themeSubmit" value="Submit">
+</form>
+
+<form th:if="${entityType == 'Platform'}" action="#" th:action="@{/client/platforms/update}" th:object="${platform}"
+      method="POST">
+    <label for="platformId">ID:</label>
+    <input type="number" id="platformId" name="platformId" th:field="*{id}"/>
+
+    <label for="platformApiId">API ID:</label>
+    <input type="number" id="platformApiId" name="platformApiId" th:field="*{apiId}"/>
+
+    <label for="platformName">Name:</label>
+    <input type="text" id="platformName" name="platformName" th:field="*{name}"/>
+
+    <input type="submit" id="platformSubmit" value="Submit">
+</form>
+
+<form th:if="${entityType == 'Company'}" action="#" th:action="@{/client/companies/update}" th:object="${company}"
+      method="POST">
+    <label for="companyId">ID:</label>
+    <input type="number" id="companyId" name="companyId" th:field="*{id}"/>
+
+    <label for="gameApiId">API ID:</label>
+    <input type="number" id="companyApiId" name="companyApiId" th:field="*{apiId}"/>
+
+    <label for="gameName">Name:</label>
+    <input type="text" id="companyName" name="companyName" th:field="*{name}"/>
+
+    <input type="submit" id="companySubmit" value="Submit">
+</form>
+</body>
+</html>

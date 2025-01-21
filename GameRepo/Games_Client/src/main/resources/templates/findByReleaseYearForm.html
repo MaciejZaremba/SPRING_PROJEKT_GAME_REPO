@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:if="${entityType == 'Game'}" action="#" th:action="@{/client/games/view/year}" th:object="${game}"
+      method="POST">
+  <label for="gameYear">Release Year:</label>
+  <input type="number" min="1900" max="2025" id="gameYear" name="gameYear" th:field="*{releaseYear}"/>
+  <input type="submit" id="gameSubmit" value="Submit">
+</form>
+</body>
+</html>

@@ -30,7 +30,7 @@ public class PlatformController {
         return new ResponseEntity<>(platforms, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/id/{id}")
     public ResponseEntity<Platform> getPlatformById(@PathVariable Long id) {
         Platform platform = platformService.findPlatformById(id);
         if (platform == null) {
@@ -69,7 +69,7 @@ public class PlatformController {
         return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/id/{id}")
     public ResponseEntity<Void> deletePlatform(@PathVariable Long id) {
         Platform platform = platformService.findPlatformById(id);
         if (platform == null) {
@@ -79,7 +79,7 @@ public class PlatformController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/id/{id}")
     public ResponseEntity<Void> updatePlatform(@PathVariable Long id, @RequestBody Platform platform) {
         Platform platformTest = platformService.findPlatformById(id);
         if (platformTest == null) {

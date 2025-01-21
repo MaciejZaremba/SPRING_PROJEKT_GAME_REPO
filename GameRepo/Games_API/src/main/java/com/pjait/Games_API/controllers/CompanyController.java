@@ -29,7 +29,7 @@ public class CompanyController {
         return new ResponseEntity<>(companies, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/id/{id}")
     public ResponseEntity<Company> getCompanyById(@PathVariable Long id) {
         Company company = companyService.findCompanyById(id);
         if (company == null) {
@@ -68,7 +68,7 @@ public class CompanyController {
         return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/id/{id}")
     public ResponseEntity<Void> deleteCompanyById(@PathVariable Long id) {
         Company company = companyService.findCompanyById(id);
         if (company == null) {
@@ -78,7 +78,7 @@ public class CompanyController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/id/{id}")
     public ResponseEntity<Void> updateCompanyById(@PathVariable Long id, @RequestBody Company company) {
         Company companyTest = companyService.findCompanyById(id);
         if (companyTest == null) {

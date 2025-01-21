@@ -69,7 +69,7 @@ public class GenreController {
         return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/id/{id}")
     public ResponseEntity<Void> deleteGenre(@PathVariable Long id) {
         Genre genre = genreService.findGenreById(id);
         if (genre == null) {
@@ -79,7 +79,7 @@ public class GenreController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/id/{id}")
     public ResponseEntity<Void> updateGenre(@PathVariable Long id, @RequestBody Genre genre) {
         Genre genreTest = genreService.findGenreById(id);
         if (genreTest == null) {

@@ -18,15 +18,15 @@ public class ViewThemeService extends ViewBaseService{
     }
 
     public Theme getThemeById(Long id) {
-        return (Theme) viewEntityByField("/themes/apiId/" + id, new ParameterizedTypeReference<>() {});
+        return (Theme) viewEntityByField("/themes/id/" + id, new ParameterizedTypeReference<Theme>() {});
     }
 
     public Theme getThemeByName(String name) {
-        return (Theme) viewEntityByField("/themes/name/" + name, new ParameterizedTypeReference<>() {});
+        return (Theme) viewEntityByField("/themes/name/" + name, new ParameterizedTypeReference<Theme>() {});
     }
 
     public Theme getThemeByApiId(Long id) {
-        return (Theme) viewEntityByField("/themes/apiId/" + id, new ParameterizedTypeReference<>() {});
+        return (Theme) viewEntityByField("/themes/apiId/" + id, new ParameterizedTypeReference<Theme>() {});
     }
 
     public void addTheme(Theme theme) {

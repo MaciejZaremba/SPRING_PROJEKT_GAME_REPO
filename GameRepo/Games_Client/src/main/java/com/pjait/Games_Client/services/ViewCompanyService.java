@@ -18,15 +18,15 @@ public class ViewCompanyService extends ViewBaseService{
     }
 
     public Company getCompanyById(Long id) {
-        return (Company) viewEntityByField("/companies/apiId/" + id, new ParameterizedTypeReference<>() {});
+        return (Company) viewEntityByField("/companies/id/" + id, new ParameterizedTypeReference<Company>() {});
     }
 
     public Company getCompanyByName(String name) {
-        return (Company) viewEntityByField("/companies/name/" + name, new ParameterizedTypeReference<>() {});
+        return (Company) viewEntityByField("/companies/name/" + name, new ParameterizedTypeReference<Company>() {});
     }
 
     public Company getCompanyByApiId(Long id) {
-        return (Company) viewEntityByField("/companies/apiId/" + id, new ParameterizedTypeReference<>() {});
+        return (Company) viewEntityByField("/companies/apiId/" + id, new ParameterizedTypeReference<Company>() {});
     }
 
     public void addCompany(Company company) {

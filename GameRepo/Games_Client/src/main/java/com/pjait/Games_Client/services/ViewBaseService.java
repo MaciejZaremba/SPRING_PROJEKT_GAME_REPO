@@ -81,7 +81,7 @@ public abstract class ViewBaseService<T> {
 
     protected void deleteEntity(String url, Long id) {
         restClient.delete()
-                .uri(url)
+                .uri(url + "/" + id)
                 .retrieve()
                 .toBodilessEntity();
     }
